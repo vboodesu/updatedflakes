@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs,... }:
 
 {
   imports =
@@ -18,7 +18,7 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
    networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
@@ -48,8 +48,8 @@
   services.xserver.enable = true;
 
   # Enable the Plasma 5 Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
   #services.xserver.windowManager.awesome.enable=true;
   #services.xserver.windowManager.i3.package = pkgs.i3-gaps; 
   #services.xserver.windowManager.i3.enable = true;
@@ -113,12 +113,15 @@ services.xserver.libinput.mouse.accelProfile = "flat";
       pkgs.swtpm
       pkgs.librewolf 
       pkgs.firefox
-#       inputs.nix-gaming.packages.x86_64-linux.osu-stable# installs a package 
-
-];
+      pkgs.git
+  inputs.nix-gaming.packages.${pkgs.system}.osu-stable  
+  ];
 
 programs.steam.enable = true;  
 
+# Nvidia
+#  hardware.nvidia.modesetting.enable = true;
+#  services.xserver.videoDrivers = [ "nvidia" ];
 
 # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -147,8 +150,6 @@ programs.steam.enable = true;
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.11"; # Did you read the comment?
 
-services.xserver.videoDrivers = [ "nvidia" ];
-hardware.opengl.driSupport32Bit = true;
   nixpkgs.config.allowUnfree = true;
 
  nix = {
@@ -198,21 +199,21 @@ services.xserver.windowManager.dwm.enable = true;
     };
   };
 
-  services.single-gpu-passthrough = {
-    enable = true;
-    machines = [
-      "win10"
-    ];
-    pciDevices = {
-      "0000:01:00:0" = "nvidia";        # GPU
-      "0000:01:00:1" = "snd_hda_intel"; # GPU Audio
-      "0000:1f:2" = "snd_hda_intel"; # Onboard Audio Controller
-      "0000:14:0" = "xhci_hcd";      # xHCI Controller
-    };
-    extraModules = [
-      "nvidiafb"
-    ];
+  
+  # Nvidia sync mode
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia.prime = {
+    sync.enable = true;
+    intelBusId = "PCI:0:2:0";
+    nvidiaBusId = "PCI:1:0:0";
   };
+  
+  
+nix.settings = {
+    substituters = [ "https://nix-gaming.cachix.org" ];
+    trusted-public-keys = [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
+  };
+
 virtualisation.libvirtd.enable = true;
 nixpkgs.config.firefox.enableGnomeExtensions = true;
 #services.gnome3.chrome-gnome-shell.enable = true;

@@ -14,12 +14,13 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-label/NIXROOT";
+    { device = "/dev/nvme0n1p2";
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-label/NIXBOOT";
+
+  fileSystems."/boot/efi" =
+    { device = "/dev/nvme0n1p1";
       fsType = "vfat";
     };
 

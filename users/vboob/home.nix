@@ -27,10 +27,11 @@ imports = [
 
 home.packages = with pkgs; [
    #alacritty 
+  osu-stable 
    polkit
    picom
    kitty
-   neofetch
+#   neofetch
    pipewire
    pipewire-media-session
    dbus
@@ -59,7 +60,8 @@ home.packages = with pkgs; [
     picom
     nitrogen  
     gruvbox-dark-gtk 
-   xorg.xf86videofbdev
+   minecraft  
+  xorg.xf86videofbdev
    droidcam 
    dolphin
    pcmanfm
@@ -85,7 +87,7 @@ home.packages = with pkgs; [
    htop
    river
 #python310Packages.bootstrapped-pip
-python39Packages.fake_factory
+#python39Packages.fake_factory
 python39Packages.factory_boy
 alacritty
 doas
