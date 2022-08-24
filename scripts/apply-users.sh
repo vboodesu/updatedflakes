@@ -1,5 +1,5 @@
 #/bin/sh
-pushd ~/flake
+pushd ~/updatedflakes
 nix build .#homeManagerConfigurations.vboob.activationPackage
 ./result/activate
 popd

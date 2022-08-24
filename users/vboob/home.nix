@@ -14,7 +14,7 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "20.09";
+  home.stateVersion = "22.05";
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -27,7 +27,7 @@ imports = [
 
 home.packages = with pkgs; [
    #alacritty 
-  osu-stable 
+  #osu-stable 
    polkit
    picom
    kitty
@@ -42,7 +42,7 @@ home.packages = with pkgs; [
    steam
    mesa
    libGL
-   discord
+   #discord
 #   libGL_driver
    woeusb
    git

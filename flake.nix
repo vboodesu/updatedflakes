@@ -20,20 +20,25 @@ description = "mald";
            };
 
       lib = nixpkgs.lib;
-    in {
-    homeManagerConfigurations = {
-      vboob = home-manager.lib.homeManagerConfiguration {
-          inherit system pkgs;
-           username = "vboob";
-           homeDirectory = "/home/vboob";
-           configuration = {
-    imports = [
-    ./users/vboob/home.nix
-    ];  
-   };
-  };
- };  
-  nixosConfigurations = {
+     in
+    {
+      homeConfigurations."vboob" = home-manager.lib.homeManagerConfiguration {
+        # pkgs = nixpkgs.legacyPackages.${system};
+        inherit pkgs;
+        modules = [
+          ./users/vboob/home.nix
+          
+          {
+            home = {
+              username = "vboob";
+              homeDirectory = "/home/vboob";
+              stateVersion = "22.05";
+            };
+          }
+        ];
+      };
+
+      nixosConfigurations = {
       nixos = lib.nixosSystem {
         specialArgs = { inherit inputs; };
         inherit system; 
@@ -42,6 +47,5 @@ description = "mald";
        ];
       };
     };
-  
   };
 }

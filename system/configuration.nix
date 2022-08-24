@@ -18,7 +18,7 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.loader.efi.efiSysMountPoint = "/boot";
    networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
@@ -49,7 +49,7 @@
 
   # Enable the Plasma 5 Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
   #services.xserver.windowManager.awesome.enable=true;
   #services.xserver.windowManager.i3.package = pkgs.i3-gaps; 
   #services.xserver.windowManager.i3.enable = true;
@@ -111,10 +111,12 @@ services.xserver.libinput.mouse.accelProfile = "flat";
       pkgs.geany
       pkgs.polkit_gnome
       pkgs.swtpm
+      inputs.nix-gaming.packages.${pkgs.system}.osu-stable
       pkgs.librewolf 
       pkgs.firefox
       pkgs.git
-  inputs.nix-gaming.packages.${pkgs.system}.osu-stable  
+	pkgs.discord
+#inputs.nix-gaming.packages.${pkgs.system}.osu-stable  
   ];
 
 programs.steam.enable = true;  
@@ -202,11 +204,6 @@ services.xserver.windowManager.dwm.enable = true;
   
   # Nvidia sync mode
   services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.prime = {
-    sync.enable = true;
-    intelBusId = "PCI:0:2:0";
-    nvidiaBusId = "PCI:1:0:0";
-  };
   
   
 nix.settings = {
