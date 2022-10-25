@@ -19,7 +19,7 @@
     };
 
 
-  fileSystems."/boot" =
+  fileSystems."/boot/efi" =
     { device = "/dev/nvme0n1p1";
       fsType = "vfat";
     };

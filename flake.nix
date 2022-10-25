@@ -3,6 +3,7 @@ description = "mald";
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+     webcord.url = "github:fufexan/webcord-flake";
      home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

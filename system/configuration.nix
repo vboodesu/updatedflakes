@@ -18,7 +18,7 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot";
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
    networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
@@ -107,15 +107,22 @@ services.xserver.libinput.mouse.accelProfile = "flat";
   # $ nix search wget
    environment.systemPackages = [
    pkgs.vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     pkgs.wget
-      pkgs.geany
-      pkgs.polkit_gnome
-      pkgs.swtpm
-      inputs.nix-gaming.packages.${pkgs.system}.osu-stable
-      pkgs.librewolf 
-      pkgs.firefox
-      pkgs.git
-	pkgs.discord
+  inputs.webcord.packages.${pkgs.system}.default
+  pkgs.neofetch
+  pkgs.kde-gruvbox
+  pkgs.vscode
+  pkgs.anki
+  pkgs.lunar-client
+  pkgs.minecraft
+  pkgs.wget
+  pkgs.geany
+  pkgs.polkit_gnome
+  pkgs.swtpm
+  #inputs.nix-gaming.packages.${pkgs.system}.osu-stable
+  pkgs.librewolf 
+  pkgs.firefox
+  pkgs.git
+  pkgs.discord
 #inputs.nix-gaming.packages.${pkgs.system}.osu-stable  
   ];
 
@@ -200,11 +207,21 @@ services.xserver.windowManager.dwm.enable = true;
       inherit pkgs;
     };
   };
-
+  programs.java = {
+    enable = true;
+  };
   
-  # Nvidia sync mode
+  hardware.nvidia.modesetting.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
-  
+  hardware.nvidia.optimus_prime = {
+    enable = true;
+
+    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
+    nvidiaBusId = "PCI:1:0:0";
+
+    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
+    intelBusId = "PCI:0:2:0";
+  };  
   
 nix.settings = {
     substituters = [ "https://nix-gaming.cachix.org" ];

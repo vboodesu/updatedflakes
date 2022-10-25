@@ -26,9 +26,12 @@ imports = [
 ];
 
 home.packages = with pkgs; [
-   #alacritty 
+  
+  #alacritty 
   #osu-stable 
-   polkit
+  ark 
+  libreoffice
+  polkit
    picom
    kitty
 #   neofetch
@@ -60,7 +63,7 @@ home.packages = with pkgs; [
     picom
     nitrogen  
     gruvbox-dark-gtk 
-   minecraft  
+   #minecraft  
   xorg.xf86videofbdev
    droidcam 
    dolphin
@@ -121,7 +124,7 @@ vimAlias = true;
 viAlias = true;
 extraConfig = ''
  set mouse=a
-colorscheme nord
+colorscheme gruvbox  
 let g:airline_theme='base16'
 set number
   set linespace=2
@@ -143,6 +146,7 @@ vim-plug
 tabnine-vim
  ];
 };
+
 
 # Kitty
 home.file = { 
